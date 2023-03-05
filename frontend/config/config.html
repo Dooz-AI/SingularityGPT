@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Voi-To-Voi</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+  </head>
+  <body>
+
+    
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Voi-To-Voi</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/config">Config</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/chat">Chat</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="jumbotron col-md-8">
+            <h1 class="display-4">Config</h1>
+            <p class="lead">Configure general settings and each model to function as you would expect.</p>
+          </div>
+        </div>
+      </div>
+    <hr class="my-4">
+
+    <!-- Modular Blocks -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="row col-md-8">
+                <div class="col-md-12 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Model To Configure</h5>
+                            <select class="form-control mb-3 configurationField" id="configurableModels" onchange="getConfiguration(this.value)">
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-md-8" id="structureContainer">
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000" style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%);">
+        <div class="toast-header">
+          <strong class="me-auto">Configuration Saved!</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          This is the toast message.
+        </div>
+      </div>
+
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/jscookie/js.cookie.js"></script>
+    <script src="/jquery/jquery.min.js"></script>
+    
+    <script src="/config/config.js"></script>
+  </body>
+</html>

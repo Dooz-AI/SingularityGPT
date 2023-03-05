@@ -1,0 +1,34 @@
+{
+    "Configuration":[
+        {
+            "name": "Model Type",
+            "id": "modelType",
+            "type": "dropdown",
+            "values":[
+                "None",
+                "Transcriber",
+                "Generator",
+                "Synthesizer"
+            ],
+            "default":"Transcriber"
+        },
+        {
+            "name": "Model Priority",
+            "id": "priority",
+            "type": "text",
+            "default": 1
+        },
+        {
+            "name": "Continuous Recording",
+            "id": "continuousRecording",
+            "type": "checkbox",
+            "default": true
+        },
+        {
+            "name": "Recording Chunk Length (milliseconds)",
+            "id": "recordingLength",
+            "type": "text",
+            "default": 3000
+        }
+    ]
+}

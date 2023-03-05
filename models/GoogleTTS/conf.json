@@ -1,0 +1,34 @@
+{
+    "Configuration":[
+        {
+            "name": "Model Type",
+            "id": "modelType",
+            "type": "dropdown",
+            "values":[
+                "None",
+                "Transcriber",
+                "Generator",
+                "Synthesizer"
+            ],
+            "default":"Synthesizer"
+        },
+        {
+            "name": "Model Priority",
+            "id": "priority",
+            "type": "text",
+            "default": 1
+        },
+        {
+            "name": "Language Code",
+            "id": "languageCode",
+            "type": "text",
+            "default": "en-US"
+        },
+        {
+            "name": "Speaker Name",
+            "id": "speakerName",
+            "type": "text",
+            "default": "en-US-Neural2-J"
+        }
+    ]
+}
