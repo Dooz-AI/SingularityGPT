@@ -13,6 +13,7 @@ router.get('/', (req, res) => {
     }
 
     const folders = files.filter(file => file.isDirectory()).map(file => file.name);
+    folders.splice(folders.indexOf("Template"),1);
     res.json(folders);
   });
 });
