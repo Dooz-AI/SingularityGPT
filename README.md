@@ -53,3 +53,29 @@ $ npm start
 ```
 
 You should now be able to access the app at http://localhost:3000! 
+
+## Configure
+Configuring existing models can be done through the Config page of the app.
+![image](https://user-images.githubusercontent.com/44745172/222992978-7c3606d8-1522-4dab-bbdb-1967914b30e4.png)
+
+The fields of these configurations are specified in a JSON file for each model which can be found under their corresponding folder. For example: models/ChatGPT/conf.json
+
+The fields that appear in the app can be changed by changing these conf.json files along the lines of the defined fields.
+
+So far there are three types of fields that can be specified:
+  - text
+  - chekbox
+  - dropdown
+
+Whenever a new field is added, the new parameters can be used inside the exe.js file of the corresponding model where they will be contained within the parameters.configuration expression.
+
+## Chat
+A chat inferace is available in the app that allows for typing messages, or talking using the microphone.
+![image](https://user-images.githubusercontent.com/44745172/222993981-c79c63a4-4ae2-4bff-bcea-cf93c16bb6b6.png)
+
+The chat process consists of three stages:
+  - Transcribe (Take speech audio and convert it to text)
+  - Generate (Create a text response from the AI to the given prompt)
+  - Synthsize (Create speech audio from the generated text)
+
+Each of these stages have one or more AI models associated with them, based on their configuration.
