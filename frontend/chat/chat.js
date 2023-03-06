@@ -152,7 +152,11 @@ function addMessage(type, message) {
     var chatMessageContainer = $("<div class='message-container'></div>");
     var chatMessage = $("<div class='chat-message col-md-8'></div>");
     chatMessage.addClass(type);
-    chatMessage.text(message);
+
+    //format message for better display
+    message = message.replace(/\n/g, "<br>");
+
+    chatMessage.html(message);
     chatMessageContainer.append(chatMessage);
     $(".chat-messages").append(chatMessageContainer);
 }
