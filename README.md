@@ -79,3 +79,10 @@ The chat process consists of three stages:
   - Synthsize (Create speech audio from the generated text)
 
 Each of these stages have one or more AI models associated with them, based on their configuration.
+
+## Adding New Models
+
+1. Navigate to the models folder inside the project.
+2. Create a copy of the Template folder and name it based on the name of the new model.
+3. Edit the conf.json file inside this folder to fit the specifications of your model.
+4. Edit the exe.js file to specify the operations that should be performed whenever your model is called.
