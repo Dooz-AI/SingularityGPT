@@ -7,13 +7,15 @@ async function execute(parameters) {
     //console.log(parameters)
     messages = [{"role": "system", "content": parameters.configuration.instruction}]
     messages = messages.concat(parameters.messages)
+    console.log(parseFloat(parameters.configuration.temperature))
+    console.log(parseFloat(parameters.configuration.maxTokens))
     const openai = new OpenAIApi(configuration);
     try {
         const response = await openai.createChatCompletion({
             model: "gpt-3.5-turbo",
             messages: messages,
-            max_tokens: parameters.configuration.maxTokens,
-            temperature: parameters.configuration.temperature,
+            temperature: parseFloat(parameters.configuration.temperature),
+            max_tokens: parseFloat(parameters.configuration.maxTokens)
         });
         //console.log(response);
         return response.data;

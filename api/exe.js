@@ -62,9 +62,9 @@ async function asyncExe(req, res) {
   executionResult = await exeModule.execute(parameters);
   res.end(JSON.stringify(executionResult));
 
-  if (parameters.configuration != undefined) {
+  if (parameters.configuration != undefined && executionResult.choices != undefined) {
     if (parameters.configuration.modelType == "Generator") {
-
+      console.log(executionResult)
       newestMessage = { role: "assistant", "content": executionResult.choices[0].message.content }
       messagesToInsert = JSON.stringify(parameters.messages.concat(newestMessage))
 
