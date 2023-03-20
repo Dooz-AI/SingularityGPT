@@ -1,0 +1,40 @@
+{
+    "Configuration":[
+        {
+            "name": "Model Type",
+            "id": "modelType",
+            "type": "dropdown",
+            "values":[
+                "None",
+                "Transcriber",
+                "Generator",
+                "Synthesizer"
+            ],
+            "default":"Generator"
+        },
+        {
+            "name": "Model Priority",
+            "id": "priority",
+            "type": "text",
+            "default": 1
+        },
+        {
+            "name": "Max Tokens",
+            "id": "maxTokens",
+            "type": "text",
+            "default":1024
+        },
+        {
+            "name": "Temperature",
+            "id": "temperature",
+            "type": "text",
+            "default":0.5
+        },
+        {
+            "name": "Initial Instruction",
+            "id": "instruction",
+            "type": "textarea",
+            "default": "You are a helpful assistant."
+        }
+    ]
+}

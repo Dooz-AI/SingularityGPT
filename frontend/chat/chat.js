@@ -159,6 +159,9 @@ function addMessage(type, message) {
     chatMessage.html(message);
     chatMessageContainer.append(chatMessage);
     $(".chat-messages").append(chatMessageContainer);
+
+    chatElemenet = document.getElementsByClassName("chat-messages")[0]
+    chatElemenet.scrollTop = chatElemenet.scrollHeight;
 }
 
 function executeGenerativeModels(){
@@ -203,6 +206,10 @@ function executeGenerativeModels(){
                     executeSynthesizerModels(message);
                 }
             }
+            if (xhr.readyState === 4){
+                console.log(this.responseText);
+            }
+            console.log(xhr.readyState)
         };
         xhr.send(JSON.stringify(executionBody));
 
@@ -247,6 +254,43 @@ function executeSynthesizerModels(textToSynth){
 
     }
     
+}
+
+function executeCMDCommand(){
+    allChatMessages = $(".chat-messages").find(".chat-message")
+    parsedChatMessages = []
+    for (let i = 0; i < allChatMessages.length; i++) {
+        const chatMessage = allChatMessages[i];
+        if(chatMessage.classList.contains("sent")){
+            role = "user"
+        }else{
+            role = "assistant"
+        }
+        content = chatMessage.innerText
+
+        parsedChatMessages.push({"role": role, "content": content})
+    }
+
+    const generativeModel = generativeModels[0];
+        
+    executionBody = {configuration: JSON.parse(Cookies.get(`configuration ${generativeModel.modelName}`)), messages: parsedChatMessages, conversationID: conversationID, commandExecution: "True"}
+    
+    const xhr = new XMLHttpRequest();
+    const url = "/api/exe?model="+generativeModel.modelName;
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Content-Type","application/json")
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4){
+            if(xhr.status === 200) {
+                response = this.responseText
+                //addMessage("sent", response)
+                console.log(response)
+                //executeGenerativeModels();
+            }
+        }
+    };
+    xhr.send(JSON.stringify(executionBody));
+
 }
 
 

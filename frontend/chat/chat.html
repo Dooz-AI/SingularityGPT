@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>Voi-To-Voi</title>
+    <title>SingularityGPT</title>
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/chat/chat.css">
 </head>
@@ -9,7 +9,7 @@
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/">Voi-To-Voi</a>
+        <a class="navbar-brand" href="/">SingularityGPT</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -61,6 +61,10 @@
                 <div class="chat-messages"></div>
                 <form class="chat-form row" onsubmit="submitMessage(event);">
                     <div class="input-group align-items-center">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button" style="display:block" onclick="executeCMDCommand()">Execute</button>
+                            <button class="btn btn-primary" type="button">Auto-Execute</button>
+                        </div>
                         <textarea class="form-control" placeholder="Type your message..." rows=3></textarea>
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">Send</button>
@@ -96,6 +100,49 @@
     <script src="/jquery/jquery.min.js"></script>
     <script src="/chat/chat.js"></script>
     <script src="/bootstrap/js/bootstrap.min.js"></script>
+
+    <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="terminal">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">$</span>
+                    </div>
+                    <input type="text" class="form-control" id="command-input" placeholder="Enter command" />
+                  </div>
+                  <div class="output" id="output"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- include Bootstrap JS and jQuery -->
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+      <script>
+        $(document).ready(function () {
+          // Listen for enter key press on input field
+          $("#command-input").on("keyup", function (event) {
+            if (event.keyCode === 13) {
+              // Get command input value
+              const command = $(this).val();
+              // Clear input field
+              $(this).val("");
+              // Display command on output
+              $("#output").append(`<div class="command">${command}</div>`);
+              // Execute command on backend
+              $.post("/execute", { command: command }, function (data) {
+                // Display output on frontend
+                $("#output").append(`<div class="output">${data}</div>`);
+              });
+            }
+          });
+        });
+      </script>
 </body>
 
 </html>

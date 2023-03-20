@@ -125,6 +125,14 @@ function displayConfiguration(modelConfiguration){
                 }
             }
             configurationFieldHTML +=`</select>`
+        }else if(configurationField.type == "textarea"){
+            textFieldValue = ""
+            if(userConfiguration !== false && userConfiguration[configurationField.id] != null){
+                textFieldValue = userConfiguration[configurationField.id]
+            }else if(configurationField.default !== "undefined"){
+                textFieldValue = configurationField.default
+            }
+            configurationFieldHTML +=`<textarea class="form-control mb-3 configurationField" id="${configurationField.id}">${textFieldValue}</textarea>`
         }
         configurationFieldHTML += `</div>`
         configurationForm += configurationFieldHTML
@@ -157,6 +165,8 @@ function configure(event, configForm, modelName){
             if(configField.type != "submit"){
                 if(configField.type == "checkbox"){
                     configBody[configField.id] = configField.checked
+                }else if(configField.tagName == "textarea"){
+                    configBody[configField.id] = configField.innerHTML
                 }else{
                     configBody[configField.id] = configField.value
                 }

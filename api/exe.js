@@ -59,37 +59,40 @@ async function asyncExe(req, res) {
   const parameters = req.body;
   const exeModule = require(`../models/${model}/exe.js`)
 
-  executionResult = await exeModule.execute(parameters);
-  res.end(JSON.stringify(executionResult));
+  executionResult = await exeModule.execute(parameters, res);
+  
 
-  if (parameters.configuration != undefined && executionResult.choices != undefined) {
-    if (parameters.configuration.modelType == "Generator") {
-      console.log(executionResult)
-      newestMessage = { role: "assistant", "content": executionResult.choices[0].message.content }
-      messagesToInsert = JSON.stringify(parameters.messages.concat(newestMessage))
+  if(executionResult != undefined){
+    res.end(JSON.stringify(executionResult));
+    if (parameters.configuration != undefined && executionResult.choices != undefined) {
+      if (parameters.configuration.modelType == "Generator") {
+        console.log(executionResult)
+        newestMessage = { role: "assistant", "content": executionResult.choices[0].message.content }
+        messagesToInsert = JSON.stringify(parameters.messages.concat(newestMessage))
 
-      let db = new sqlite3.Database('./database/conversations.db', (err) => {
-        if (err) {
-          console.error(err.message);
-        }
-      });
+        let db = new sqlite3.Database('./database/conversations.db', (err) => {
+          if (err) {
+            console.error(err.message);
+          }
+        });
 
 
-      conversationName = parameters.messages[0].content.slice(0, 30)
+        conversationName = parameters.messages[0].content.slice(0, 30)
 
-      let sql = `INSERT OR REPLACE INTO conversations (Id, name, messages) VALUES (?, ?, ?)`;
-      db.run(sql, [parameters.conversationID, conversationName, messagesToInsert], function (err) {
-        if (err) {
-          console.error(err.message);
-        }
-      });
+        let sql = `INSERT OR REPLACE INTO conversations (Id, name, messages) VALUES (?, ?, ?)`;
+        db.run(sql, [parameters.conversationID, conversationName, messagesToInsert], function (err) {
+          if (err) {
+            console.error(err.message);
+          }
+        });
 
-      db.close((err) => {
-        if (err) {
-          console.error(err.message);
-        }
-      });
+        db.close((err) => {
+          if (err) {
+            console.error(err.message);
+          }
+        });
 
+      }
     }
   }
 }

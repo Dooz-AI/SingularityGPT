@@ -17,6 +17,9 @@
     "js-cookie": "^3.0.1",
     "openai": "^3.2.1",
     "request": "^2.88.2",
-    "sqlite3": "^5.1.4"
+    "sqlite3": "^5.1.6"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
   }
 }
