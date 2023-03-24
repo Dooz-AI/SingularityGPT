@@ -154,7 +154,11 @@ function addMessage(type, message) {
     chatMessage.addClass(type);
 
     //format message for better display
+    
+    //message = htmlEncode(message)
+    message = highlightCode(message)
     message = message.replace(/\n/g, "<br>");
+    
 
     chatMessage.html(message);
     chatMessageContainer.append(chatMessage);
@@ -163,6 +167,45 @@ function addMessage(type, message) {
     chatElemenet = document.getElementsByClassName("chat-messages")[0]
     chatElemenet.scrollTop = chatElemenet.scrollHeight;
 }
+
+
+  function highlightCode(message) {
+    // Define the regular expression to match code sections
+    const codeRegex = /```(.+?)```/gs;
+  
+    // Initialize the updated message
+    let updatedMessage = '';
+  
+    // Iterate over the matches of the codeRegex in the message
+    let match;
+    let lastIndex = 0;
+    while ((match = codeRegex.exec(message)) !== null) {
+      // Encode the text before the match and append it to the updated message
+      const preMatch = message.substring(lastIndex, match.index);
+      const encodedPreMatch = preMatch.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      updatedMessage += encodedPreMatch;
+  
+      // Use PrismJS to highlight the code section and wrap it in a <pre><code> block
+      const language = 'javascript';
+      const code = match[1].trim();
+      const highlightedCode = Prism.highlight(code, Prism.languages[language], language);
+      const wrappedCode = `<pre class="language-${language}"><code>${highlightedCode}</code></pre>`;
+  
+      // Append the wrapped code to the updated message
+      updatedMessage += wrappedCode;
+  
+      // Update the lastIndex to the end of the match
+      lastIndex = codeRegex.lastIndex;
+    }
+  
+    // Encode the remaining text after the last match and append it to the updated message
+    const remainingText = message.substring(lastIndex);
+    const encodedRemainingText = remainingText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    updatedMessage += encodedRemainingText;
+  
+    // Return the updated message with highlighted code sections and encoded text
+    return updatedMessage;
+  }
 
 function executeGenerativeModels(){
     allChatMessages = $(".chat-messages").find(".chat-message")
@@ -195,6 +238,8 @@ function executeGenerativeModels(){
                 if(xhr.status === 200) {
                     response = JSON.parse(this.responseText)
                     message = response.choices[0].message.content
+
+                    
 
                     addMessage("received", message)
                 }
@@ -266,7 +311,7 @@ function executeCMDCommand(){
         }else{
             role = "assistant"
         }
-        content = chatMessage.innerText
+        content = chatMessage.innerHTML
 
         parsedChatMessages.push({"role": role, "content": content})
     }
@@ -284,7 +329,8 @@ function executeCMDCommand(){
             if(xhr.status === 200) {
                 response = this.responseText
                 //addMessage("sent", response)
-                console.log(response)
+                $(".form-control").val(response);
+                //console.log(response)
                 //executeGenerativeModels();
             }
         }

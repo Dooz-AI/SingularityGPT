@@ -98,7 +98,11 @@ async function asyncExe(req, res) {
 }
 
 router.post('/', (req, res) => {
+  try{
   asyncExe(req, res);
+  }catch (e){
+    res.end("An error has occured: " + e)
+  }
 });
 
 module.exports = router;

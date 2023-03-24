@@ -16,6 +16,7 @@
     "jquery": "^3.6.3",
     "js-cookie": "^3.0.1",
     "openai": "^3.2.1",
+    "prismjs": "^1.29.0",
     "request": "^2.88.2",
     "sqlite3": "^5.1.6"
   },

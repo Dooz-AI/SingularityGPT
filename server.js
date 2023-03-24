@@ -2,23 +2,12 @@ require("dotenv").config();
 const bodyParser = require('body-parser');
 const express = require('express');
 const sqlite3 = require('sqlite3')
-const { spawn } = require('child_process');
 const app = express();
 const port = 3000;
 
-// Spawn a global CMD session
-terminal = require('child_process').spawn('cmd', ['/K'], { timeout : 1000*60, cwd: './aidev' });
-terminal.stdin.setEncoding = 'utf-8';
+// set AI development directory
+global.devDirectory = "D:\\singularityGPT\\SingularityGPT\\aidev"
 
-terminal.stdout.on('data', function (data) {
-    console.log('stdout: ' + data);
-});
-
-terminal.on('exit', function (code) {
-    // console.log('child process exited with code ' + code);
-});
-
-global.terminal = terminal;
 
 // Use the body-parser middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,6 +21,7 @@ app.use(express.static('frontend'));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use('/jscookie', express.static(__dirname + '/node_modules/js-cookie/dist'));
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist'));
+app.use('/prismjs', express.static(__dirname + '/node_modules/prismjs'));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/frontend/config/config.html');
